@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gurguri Wave</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #121638, #090b1c 60%);
+      color: #f4f7ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .wave-title {
+      display: flex;
+      gap: 0.3rem;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(108, 92, 231, 0.4);
+    }
+
+    .wave-title span {
+      display: inline-block;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+
+    .wave-title span:nth-child(1) { animation-delay: 0s; }
+    .wave-title span:nth-child(2) { animation-delay: 0.08s; }
+    .wave-title span:nth-child(3) { animation-delay: 0.16s; }
+    .wave-title span:nth-child(4) { animation-delay: 0.24s; }
+    .wave-title span:nth-child(5) { animation-delay: 0.32s; }
+    .wave-title span:nth-child(6) { animation-delay: 0.40s; }
+    .wave-title span:nth-child(7) { animation-delay: 0.48s; }
+
+    @keyframes wave {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        color: #f4f7ff;
+      }
+      25% {
+        transform: translateY(-18px) scale(1.06);
+        color: #007a16;
+      }
+      50% {
+        transform: translateY(0) scale(1);
+        color: #f4f7ff;
+      }
+      75% {
+        transform: translateY(18px) scale(0.98);
+        color: #14bf5e;
+      }
+    }
+
+    .subtitle {
+      position: absolute;
+      bottom: 2rem;
+      width: 100%;
+      text-align: center;
+      font-size: 1rem;
+      color: rgba(244, 247, 255, 0.65);
+      letter-spacing: 0.12em;
+    }
+  </style>
+</head>
+<body>
+  <div class="wave-title" aria-label="Gurguri">
+    <span>G</span>
+    <span>U</span>
+    <span>R</span>
+    <span>G</span>
+    <span>U</span>
+    <span>R</span>
+    <span>I</span>
+  </div>
+</body>
+</html>
