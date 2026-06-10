@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[MINUTA] Projeto Piloto: Open Lab | IFCE Campus Baturité</title>
+    <style>
+        :root {
+            /* Identidade Visual IFCE */
+            --ifce-green: #2F9E41;
+            --ifce-dark-green: #1a5c26;
+            --ifce-red: #CC0000;
+            --ifce-dark-red: #990000;
+            
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 40px; /* Espaço para a barra de minuta */
+            position: relative;
+            z-index: 0;
+        }
+
+        /* --- ELEMENTOS DE MINUTA --- */
+        .minuta-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffcc00;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 180px;
+            color: rgba(0, 0, 0, 0.04);
+            z-index: -1;
+            pointer-events: none;
+            white-space: nowrap;
+            font-weight: 900;
+            user-select: none;
+        }
+        /* --------------------------- */
+
+        header {
+            background: linear-gradient(135deg, var(--ifce-dark-green), var(--ifce-green));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--ifce-red);
+        }
+
+        header .badge {
+            display: inline-block;
+            background-color: var(--ifce-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* --- ESTILOS DO ABSTRACT --- */
+        .abstract-section {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 60px;
+            border-left: 8px solid var(--ifce-red);
+        }
+
+        .abstract-section h2 {
+            color: var(--ifce-dark-green);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .abstract-item {
+            margin-bottom: 20px;
+        }
+
+        .abstract-item h3 {
+            color: var(--ifce-green);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .abstract-item p {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .abstract-item ul {
+            margin-left: 20px;
+            list-style-type: disc;
+            color: #444;
+        }
+
+        .abstract-item ul li {
+            margin-bottom: 5px;
+        }
+        /* --------------------------- */
+
+        .infographic-section {
+            text-align: center;
+            margin-bottom: 60px;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .infographic-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 4px solid #f1f1f1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--ifce-dark-green);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--ifce-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--ifce-green);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-top-color: var(--ifce-red);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: var(--ifce-dark-green);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .card ul {
+            list-style-type: none;
+        }
+
+        .card ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .card ul li::before {
+            content: '✓';
+            color: var(--ifce-red);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .impact-section {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 50px;
+            border-radius: 12px;
+            border-left: 8px solid var(--ifce-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .impact-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .impact-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--ifce-dark-green);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--ifce-red);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            text-align: center;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--ifce-dark-red);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            background-color: #e9ecef;
+            border-top: 1px solid #ddd;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        
+        /* Estilo para a autoria discreta */
+        .author-credit {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .impact-section { flex-direction: column; text-align: center; }
+            .watermark { font-size: 100px; }
+            .abstract-section { padding: 25px; }
+        }
+    </style>
+    <!--importar bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <!-- Avisos de Minuta -->
+    <div class="minuta-banner">⚠️ DOCUMENTO EM FASE DE MINUTA - PROPOSTA SUJEITA A AVALIAÇÃO E ALTERAÇÕES ⚠️</div>
+    <div class="watermark">MINUTA</div>
+
+    <header>
+        <span class="badge">Proposta de Experimento</span>
+        <h1>Projeto Piloto: Open Lab</h1>
+        <p>Transformando a infraestrutura tecnológica do IFCE Campus Baturité em um ecossistema autônomo, seguro e de acesso contínuo.</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Abstract / Resumo Executivo -->
+        <div class="abstract-section">
+            <h2>Resumo Executivo</h2>
+            
+            <div class="abstract-item">
+                <h3>🎯 Objetivo Central</h3>
+                <p>Transformar o laboratório de informática do IFCE Campus Baturité em um ecossistema autônomo e seguro. O projeto visa maximizar o uso da infraestrutura a <strong>Comunidade Interna</strong> e para a <strong>Comunidade Externa</strong>, operando em regime <em>self-service</em> nos horários vagos, sem perder a flexibilidade necessária para as aulas formais.</p>
+            </div>
+
+            <div class="abstract-item">
+                <h3>⚙️ Arquitetura da Solução (3 Pilares)</h3>
+                <p>A infraestrutura será baseada em soluções freeware e de código aberto, dividida em:</p>
+                <ul>
+                    <li><strong>Gestão de Acesso (Modo Self-Service):</strong> Terminais bloqueados por padrão. O usuário se autentica, consome uma cota diária de tempo e o sistema realiza o logoff automático ao zerar o cronômetro.</li>
+                    <li><strong>Segurança Híbrida:</strong> Monitoramento digital remoto e em tempo real de todas as telas, operando em conjunto com a gravação física do ambiente por Câmeras IP <i class="bi bi-webcam"></i>.</li>
+                    <li><strong>Flexibilidade (Modo Aula):</strong> Liberação centralizada. O sistema de cotas é suspenso temporariamente e o professor assume o monitoramento das máquinas durante sua disciplina.</li>
+                </ul>
+            </div>
+
+            <div class="abstract-item">
+                <h3>🚀 Impacto Estratégico e Social</h3>
+                <ul>
+                    <li><strong>Extensão e Inclusão:</strong> Viabiliza a abertura segura do espaço nos horários ociosos para o atendimento e a inclusão digital da comunidade externa.</li>
+                    <li><strong>Diferenciação Mercadológica ("Campus Fluido"):</strong> Posiciona a instituição com uma infraestrutura de ensino <em>on-demand</em>, atraindo alunos com a promessa de um laboratório sempre disponível.</li>
+                </ul>
+            </div>
+
+            <div class="abstract-item">
+                <h3>🔬 Próximo Passo</h3>
+                <p>Execução de um <strong>experimento piloto de 15 dias</strong> em ambiente restrito para validação técnica do sistema de cotas, testes de monitoramento e coleta de métricas de uso institucional.</p>
+            </div>
+        </div>
+
+        <!-- Infográfico -->
+        <div class="infographic-section">
+            <h2 class="section-title">Visão Geral do Ecossistema</h2>
+            <!-- Caminho da imagem -->
+            <img src="../static/info-open-lab.png" alt="Infográfico do Experimento Open Lab detalhando Modo Self-Service, Segurança Híbrida e Modo Aula">
+        </div>
+        <!-- Adicione um card com um iframe para o documento nesse servidor "./draft-open-lab-demo.html" -->        
+        
+        <a href="./draft-open-lab-demo.html">
+        <div class="infographic-section" style="margin-top: -30px; border-top: none; border-radius: 0 0 12px 12px; background-color: #fcfcfc;">
+            <h3 style="color: var(--ifce-dark-green); margin-bottom: 20px; font-size: 1.1rem;">
+                <i class="bi bi-play-circle-fill"></i> Demonstração Interativa do Conceito
+            </h3>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; border: 2px solid #eee;">
+                <iframe src="./draft-open-lab-demo.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" title="Simulador Open Lab"></iframe>
+            </div>
+            <p style="font-size: 0.85rem; color: #777; margin-top: 15px;">
+                * Simulação simplificada dos estados de transição entre o regime Self-Service e o Modo Aula.
+            </p>
+        </div>
+        </a>
+        
+
+        <!-- Pilares do Projeto -->
+        <h2 class="section-title">Os Três Pilares Tecnológicos</h2>
+        <div class="grid-3">
+            
+            <div class="card">
+                <div class="card-icon">🖥️</div>
+                <h3>1. Modo Self-Service</h3>
+                <p>Otimização para horários vagos. O laboratório funciona de forma autônoma e justa para todos.</p>
+                <br>
+                <ul>
+                    <li>Bloqueio de tela nativo (Kiosk Mode).</li>
+                    <li>Acesso mediante credenciais do usuário.</li>
+                    <li>Sistema de cotas diárias de tempo (ex: 2h).</li>
+                    <li>Logoff automático ao zerar o cronômetro.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🛡️</div>
+                <h3>2. Segurança Híbrida</h3>
+                <p>Auditoria completa cruzando dados digitais e espaço físico em tempo real.</p>
+                <br>
+                <ul>
+                    <li>Vigilância Digital (Veyon): Monitoramento da tela de todos os terminais.</li>
+                    <li>Vigilância Física: Câmeras IP gravando continuamente o ambiente.</li>
+                    <li>Relatórios exatos: Usuário, máquina, horário de entrada e saída.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">👨‍🏫</div>
+                <h3>3. Modo Aula</h3>
+                <p>Flexibilidade e controle absoluto nos momentos de ensino formal das disciplinas.</p>
+                <br>
+                <ul>
+                    <li>Suspensão centralizada do sistema de cotas.</li>
+                    <li>Acesso livre e imediato aos sistemas operacionais.</li>
+                    <li>O professor assume o painel de monitoramento da turma.</li>
+                    <li>Intervenção e bloqueio de terminais sob demanda docente.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Impacto e Vantagem Mercadológica -->
+        <div class="impact-section">
+            <div class="impact-text">
+                <h2>Vantagem Estratégica & Impacto Social</h2>
+                <p>Este experimento vai além da logística. Para o curso de <strong>Informática PARA Internet EaD</strong>, implementamos o conceito de <em>"Campus Fluido"</em>. Não oferecemos apenas o horário de aula engessado, mas sim um <strong>Hub Tecnológico</strong> disponível sob demanda.</p>
+                <br>
+                <p>Nos horários ociosos, o modelo "Open Lab" permite abrirmos nossas portas para o <strong>atendimento e inclusão digital da comunidade externa</strong>, fortalecendo a extensão institucional do campus.</p>
+            </div>
+            <!-- <div>
+                <a href="mailto:coordenacao@exemplo.com.br?subject=Aprovação Piloto Open Lab" class="cta-btn">Validar Minuta (Piloto 15 Dias)</a>
+            </div> -->
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>IFCE - Instituto Federal do Ceará | Campus Baturité</strong></p>
+        <p>Documento Minuta: Proposta de Experimento Piloto para Laboratórios de Informática baseados em soluções Freeware/Open Source.</p>
+        <p class="author-credit">Idealização do Projeto: Prof. Gurguri</p>
+    </footer>
+
+</body>
+</html>

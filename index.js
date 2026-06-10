@@ -12,8 +12,6 @@ fs.readdir(pastaRascunhos, (err, arquivos) => {
         return console.error('Erro ao ler a pasta Docs. Certifique-se de que ela existe.', err);
     }
 
-    arquivos = arquivos.filter(arquivo => path.basename(arquivo) !== 'CNAME');
-
     // Cria os links HTML para cada arquivo encontrado
     const links = arquivos.map(arquivo => {
         return `            <li>

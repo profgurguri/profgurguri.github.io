@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animação Conceitual: Open Lab - Diversidade</title>
+    importar bootstrap <!-- Bootstrap Icons CDN -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    
+    <!-- Example icon usage -->
+    <i class="bi bi-alarm"></i>
+    
+    <style>
+        :root {
+            --ifce-green: #2F9E41;
+            --ifce-dark-green: #1a5c26;
+            --ifce-red: #CC0000;
+            --bg-color: #f0f2f5;
+            --pc-locked: #e0e0e0;
+            --pc-active: #c8e6c9;
+            --pc-class: #bbdefb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            color: var(--ifce-dark-green);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* Container do Laboratório */
+        .lab-container {
+            background-color: white;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            border: 4px solid #ddd;
+            transition: all 0.5s ease;
+        }
+
+        /* Efeito de pulse para a Câmera */
+        .camera {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #555;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--ifce-red);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; box-shadow: 0 0 0 0 rgba(204, 0, 0, 0.7); }
+            70% { opacity: 0.3; box-shadow: 0 0 0 10px rgba(204, 0, 0, 0); }
+            100% { opacity: 1; box-shadow: 0 0 0 0 rgba(204, 0, 0, 0); }
+        }
+
+        /* Painel do Sysadmin */
+        .sysadmin-desk {
+            background: linear-gradient(135deg, var(--ifce-dark-green), var(--ifce-green));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            background-color: white;
+            color: var(--ifce-dark-green);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .toggle-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Grade de Computadores (Agora com 6 colunas flexíveis) */
+        .pc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+        }
+
+        /* Estilo Base do PC */
+        .pc {
+            background-color: var(--pc-locked);
+            border: 3px solid #ccc;
+            border-radius: 10px 10px 0 0;
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.5s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .pc::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            width: 40px;
+            height: 12px;
+            background-color: #999;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .pc-icon {
+            font-size: 3rem;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .pc-status {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            color: #444;
+            padding: 0 5px;
+        }
+
+        /* Barra de Progresso (Cota) */
+        .progress-bar {
+            position: absolute;
+            bottom: 8px;
+            width: 80%;
+            height: 6px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--ifce-dark-green);
+            width: 100%;
+            animation: decrease 12s linear infinite;
+        }
+
+        @keyframes decrease {
+            0% { width: 100%; background-color: var(--ifce-dark-green); }
+            50% { background-color: #f39c12; }
+            100% { width: 0%; background-color: var(--ifce-red); }
+        }
+
+        /* ESTADO 1: Self-Service (Animação do PC em Uso) */
+        .pc.in-use {
+            background-color: var(--pc-active);
+            border-color: var(--ifce-green);
+        }
+        .pc.in-use .progress-bar {
+            display: block;
+        }
+
+        /* ESTADO 2: Modo Aula Ativado */
+        .lab-container.modo-aula-ativo {
+            border-color: #2196F3;
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
+        }
+
+        .lab-container.modo-aula-ativo .sysadmin-desk {
+            background: linear-gradient(135deg, #1976D2, #42A5F5);
+        }
+
+        .lab-container.modo-aula-ativo .toggle-btn {
+            color: #1976D2;
+        }
+
+        .lab-container.modo-aula-ativo .pc {
+            background-color: var(--pc-class);
+            border-color: #2196F3;
+        }
+
+        .lab-container.modo-aula-ativo .progress-bar {
+            display: none !important;
+        }
+        
+        .status-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .author-credit {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .sysadmin-desk { flex-direction: column; gap: 15px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>Simulador: Ecossistema Open Lab</h2>
+        <p>Clique no botão do painel para alternar entre os regimes de funcionamento.</p>
+    </div>
+
+    <div class="lab-container" id="labContainer">
+        
+        <!-- Câmera de Segurança -->
+        <div class="camera">
+            <div class="recording-dot"></div>
+            REC
+        </div>
+
+        <!-- Painel Sysadmin -->
+        <div class="sysadmin-desk">
+            <div>
+                <h3>Painel Veyon / Manager</h3>
+                <div class="status-badge" id="statusText">Modo Atual: SELF-SERVICE (Cotas ativas)</div>
+            </div>
+            <button class="toggle-btn" onclick="toggleModo()">🔄 Ativar MODO AULA</button>
+        </div>
+
+        <!-- Computadores do Laboratório -->
+        <div class="pc-grid">
+            
+            <!-- PC 1: Masculino, Caucasiano -->
+            <div class="pc in-use" id="pc1">
+                <div class="pc-icon" id="icon1">👨🏻</div>
+                <div class="pc-status" id="text1">Em Uso (Cota)</div>
+                <div class="progress-bar"><div class="progress-fill" style="animation-delay: 0s;"></div></div>
+            </div>
+
+            <!-- PC 2: Feminina, Negra -->
+            <div class="pc in-use" id="pc2">
+                <div class="pc-icon" id="icon2">👩🏿</div>
+                <div class="pc-status" id="text2">Em Uso (Cota)</div>
+                <div class="progress-bar"><div class="progress-fill" style="animation-delay: -4s;"></div></div>
+            </div>
+
+            <!-- PC 3: Bloqueado aguardando -->
+            <div class="pc" id="pc3">
+                <div class="pc-icon" id="icon3">🔒</div>
+                <div class="pc-status" id="text3">Livre</div>
+            </div>
+
+            <!-- PC 4: Masculino, Negro -->
+            <div class="pc in-use" id="pc4">
+                <div class="pc-icon" id="icon4">👨🏿</div>
+                <div class="pc-status" id="text4">Em Uso (Cota)</div>
+                <div class="progress-bar"><div class="progress-fill" style="animation-delay: -8s;"></div></div>
+            </div>
+
+            <!-- PC 5: Feminina, Caucasiana -->
+            <div class="pc in-use" id="pc5">
+                <div class="pc-icon" id="icon5">👩🏼</div>
+                <div class="pc-status" id="text5">Em Uso (Cota)</div>
+                <div class="progress-bar"><div class="progress-fill" style="animation-delay: -2s;"></div></div>
+            </div>
+
+            <!-- PC 6: Bloqueado aguardando -->
+            <div class="pc" id="pc6">
+                <div class="pc-icon" id="icon6">🔒</div>
+                <div class="pc-status" id="text6">Livre</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- adicionar backlink para "./draft-open-lab.html" -->
+     estilizar backlink como botão
+    <a href="./draft-open-lab.html" class="backlink"><i class="bi bi-arrow-return-left"></i>Voltar para a página do projeto</a>    <style>
+        .backlink {
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--ifce-dark-green);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid var(--ifce-green);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .backlink:hover {
+            background-color: var(--ifce-green);
+            color: white;
+        }
+    </style>
+    
+
+    <div class="author-credit">Idealização do Projeto: Prof. Gurguri</div>
+
+    <script>
+        let isModoAula = false;
+
+        // Armazenando o estado padrão do Self-Service
+        const iconesPadrao = ["👨🏻", "👩🏿", "🔒", "👨🏿", "👩🏼", "🔒"];
+        const textosPadrao = ["Em Uso", "Em Uso", "Bloqueado", "Em Uso", "Em Uso", "Bloqueado"];
+        const classesPadrao = ["pc in-use", "pc in-use", "pc", "pc in-use", "pc in-use", "pc"];
+
+        function toggleModo() {
+            const container = document.getElementById('labContainer');
+            const btn = document.querySelector('.toggle-btn');
+            const statusText = document.getElementById('statusText');
+            
+            isModoAula = !isModoAula;
+
+            if (isModoAula) {
+                // ATIVAR MODO AULA
+                container.classList.add('modo-aula-ativo');
+                btn.innerHTML = "🔄 Voltar para SELF-SERVICE";
+                statusText.innerHTML = "Modo Atual: AULA (Acesso Livre / Cotas Suspensas)";
+                
+                // Todos os PCs viram "Tela Livre" com ícone de computador ou turma
+                for(let i=1; i<=6; i++) {
+                    document.getElementById('icon'+i).innerHTML = "💻";
+                    document.getElementById('text'+i).innerHTML = "Tela Livre";
+                    document.getElementById('pc'+i).className = "pc"; // Remove o "in-use"
+                }
+            } else {
+                // VOLTAR PARA SELF SERVICE
+                container.classList.remove('modo-aula-ativo');
+                btn.innerHTML = "🔄 Ativar MODO AULA";
+                statusText.innerHTML = "Modo Atual: SELF-SERVICE (Cotas ativas)";
+                
+                // Restaurar estado com diversidade e bloqueados
+                for(let i=1; i<=6; i++) {
+                    document.getElementById('icon'+i).innerHTML = iconesPadrao[i-1];
+                    document.getElementById('text'+i).innerHTML = textosPadrao[i-1];
+                    document.getElementById('pc'+i).className = classesPadrao[i-1];
+                }
+            }
+        }
+    </script>
+</body>
+</html>
